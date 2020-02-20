@@ -29,6 +29,11 @@ public class MotorCarreteras : MonoBehaviour
     public GameObject mCamGO;
     public Camera mCamComp;
 
+    public GameObject cocheGO;
+    public GameObject audioFXGO;
+    public AudioFX audioFXScript;
+    public GameObject bgFinalGO;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,17 +42,33 @@ public class MotorCarreteras : MonoBehaviour
     }
 
     void InicioJuego()
-    {
+    {       
         contenedorCallesGO = GameObject.Find("ContenedorCalles");
 
         mCamGO = GameObject.Find("Main Camera");
         mCamComp = mCamGO.GetComponent<Camera>();
+
+        bgFinalGO = GameObject.Find("PanelGameOver");
+        bgFinalGO.SetActive(false);
+
+        audioFXGO = GameObject.Find("AudioFX");
+        audioFXScript = audioFXGO.GetComponent<AudioFX>();
+
+        cocheGO = GameObject.FindObjectOfType<Coche>().gameObject;
 
 
         VelocidadMotorCarretera();
         MedirPantalla();
         BuscoCalles();
 
+    }
+
+    public void JuegoTerminadoEstados() 
+    
+    {
+        cocheGO.GetComponent<AudioSource>().Stop(); 
+        audioFXScript.FXMusic();
+        bgFinalGO.SetActive(true);
     }
 
     void VelocidadMotorCarretera()
